@@ -6,30 +6,30 @@ import sys
 if __name__ == '__main__':
 
     if len(sys.argv) < 3:
-        data_f = './eva-data.json'
-        data_t = './eva-data.csv'
+        input_file = './eva-data.json'
+        output_file = './eva-data.csv'
         print(f'Using default input and output filenames')
     else:
-        data_f = sys.argv[1]
-        data_t = sys.argv[2]
+        input_file = sys.argv[1]
+        output_file = sys.argv[2]
         print(f'Using custom input and output filenames')
 
-    g_file = './cumulative_eva_graph.png'
+    graph_file = './cumulative_eva_graph.png'
 
-    data = pd.read_json(data_f, convert_dates=['date'])
-    data['eva'] = data['eva'].astype(float)
-    data.dropna(axis=0, inplace=True)
-    data.sort_values('date', inplace=True)
+    eva_df = pd.read_json(input_file, convert_dates=['date'])
+    eva_df['eva'] = eva_df['eva'].astype(float)
+    eva_df.dropna(axis=0, inplace=True)
+    eva_df.sort_values('date', inplace=True)
 
-    data.to_csv(data_t, index=False)
+    eva_df.to_csv(output_file, index=False)
 
-    data['duration_hours'] = data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
-    data['cumulative_time'] = data['duration_hours'].cumsum()
+    eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
+    eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
 
 
-    plt.plot(data.date,data.cumulative_time, 'ko-')
+    plt.plot(eva_df.date,eva_df.cumulative_time, 'ko-')
     plt.xlabel('Year')
     plt.ylabel('Total time spent in space to date (hours)')
     plt.tight_layout()
-    plt.savefig(g_file)
+    plt.savefig(graph_file)
     plt.show()
