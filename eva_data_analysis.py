@@ -2,6 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 
+def read_json_to_dataframe(in_file):
+    eva_df = pd.read_json(in_file, convert_dates=['date'])
+    # convert the eva number to a numerical type
+    eva_df['eva'] = eva_df['eva'].astype(float)
+
+    #drop entries with missing data
+    eva_df.dropna(axis=0, inplace=True)
+
+    # ensure the data is sorted by date
+    eva_df.sort_values('date', inplace=True)
+    return eva_df
 
 if __name__ == '__main__':
 
@@ -17,15 +28,8 @@ if __name__ == '__main__':
 
     graph_file = './cumulative_eva_graph.png'
 
-    eva_df = pd.read_json(input_file, convert_dates=['date'])
-    # convert the eva number to a numerical type
-    eva_df['eva'] = eva_df['eva'].astype(float)
 
-    #drop entries with missing data
-    eva_df.dropna(axis=0, inplace=True)
-
-    # ensure the data is sorted by date
-    eva_df.sort_values('date', inplace=True)
+    eva_df = read_json_to_dataframe(input_file)
 
     eva_df.to_csv(output_file, index=False)
 
@@ -33,7 +37,7 @@ if __name__ == '__main__':
     eva_df['duration_hours'] = eva_df['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
     eva_df['cumulative_time'] = eva_df['duration_hours'].cumsum()
 
-
+    # make the graph
     plt.plot(eva_df.date,eva_df.cumulative_time, 'ko-')
     plt.xlabel('Year')
     plt.ylabel('Total time spent in space to date (hours)')
