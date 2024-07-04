@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 import re
 
+
 def read_json_to_dataframe(input_file_):
     """
     Read the data from a JSON file into a Pandas dataframe.
@@ -144,7 +145,7 @@ def summarise_categorical(df_, varname_):
 
     # Prepare statistical summary
     count_variable = df_[[varname_]].copy()
-    count_summary = count_variable.value_counts() # There is a bug here that we will fix later!
+    count_summary = count_variable.value_counts(dropna=False)
     percentage_summary = round(count_summary / count_variable.size, 2) * 100
 
     # Combine results into a summary data frame
