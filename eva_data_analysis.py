@@ -9,9 +9,6 @@ graph_file = 'myplot.png'
 
 fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
 
-data=[]
-
-
 eva_df = pd.read_json(input_file, convert_dates=['date'])
 eva_df['eva'] = eva_df['eva'].astype(float)
 eva_df.dropna(axis=0, inplace=True)
