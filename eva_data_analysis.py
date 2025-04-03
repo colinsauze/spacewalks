@@ -1,9 +1,8 @@
-import json
-import csv
-import datetime as dt
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
+
+# https://data.nasa.gov/resource/eva.json (with modifications)
 
 def main(input_file, output_file, graph_file):
     print("--START--")
@@ -22,7 +21,7 @@ def read_json_to_dataframe(input_file):
     Clean the data by removing any incomplete rows and sort by date
 
     Args:
-        input_file_ (str): The path to the JSON file.
+        input_file (str): The path to the JSON file.
 
     Returns:
          eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
@@ -44,7 +43,7 @@ def write_dataframe_to_csv(df, output_file):
         output_file (str): The path to the output CSV file.
 
     Returns:
-        None
+        (None):
     """
     print(f'Saving to CSV file {output_file}')
     df.to_csv(output_file, index=False)
@@ -95,7 +94,7 @@ def plot_cumulative_time_in_space(df, graph_file):
         graph_file (str): The path to the output graph file.
 
     Returns:
-        None
+        (None):
     """
     print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
     df = add_duration_hours_variable(df)
@@ -111,13 +110,13 @@ def plot_cumulative_time_in_space(df, graph_file):
 if __name__ == "__main__":
 
     if len(sys.argv) < 3:
-        input_file = './eva-data.json'
-        output_file = './eva-data.csv'
+        input_file = 'data/eva-data.json'
+        output_file = 'results/eva-data.csv'
         print(f'Using default input and output filenames')
     else:
         input_file = sys.argv[1]
         output_file = sys.argv[2]
         print('Using custom input and output filenames')
 
-    graph_file = './cumulative_eva_graph.png'
+    graph_file = 'results/cumulative_eva_graph.png'
     main(input_file, output_file, graph_file)
