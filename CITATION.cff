@@ -1,0 +1,16 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Spacewalks
+message: >-
+  Spacewalks is a Python analysis tool for researchers to
+  generate visualisations and statistical summaries of
+  NASA's extravehicular activity datasets.
+type: software
+authors:
+  - given-names: Colin James
+    family-names: Sauze
+    email: colin.sauze@noc.ac.uk
+    affiliation: National Oceanography Centre
+    orcid: 'https://orcid.org/0000-0001-5368-9217'
