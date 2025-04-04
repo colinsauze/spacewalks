@@ -137,8 +137,7 @@ def add_crew_size_column(df):
     print('Adding crew size variable (crew_size) to dataset')
     df_copy = df.copy()
     df_copy["crew_size"] = df_copy["crew"].apply(
-        calculate_crew_size
-    )
+        calculate_crew_size)
     return df_copy
 
 if __name__ == "__main__":
